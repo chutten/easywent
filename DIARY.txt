@@ -1,0 +1,25 @@
+grt-gtfs DEVELOPER DIARY:
+
+1) Tried looking directly into gtfs-realtime js. Nothing obvious beyond a (google?) npm lib which... might have worked? Not too interested. 
+2) Backed up a level of abstraction and found protobuf.js (https://github.com/dcodeIO/protobuf.js). Gonna use that
+3) Reading.
+Install nodejs-legacy
+Install npm
+(( good god, how I hate "server-side" JS and its dependency hell ))
+npm install inside protobuf.js (master)
+_now_ pbjs works
+
+Convert latest gtfs-realtime.proto to json. Yay.
+
+Time to write index.html... wait
+
+Need to copy over the deps. Fine. clone bytebuffer, copy it.min and protobuf-light.min over
+http://www.regionofwaterloo.ca/en/regionalGovernment/GRT_GTFSdata.asp
+
+CORS fail on GRT's behalf. Sent them an email via automated form, we'll see what comes of it.
+
+For now, pulled down local copies of latest data to do some finagling.
+Though, really, maybe I should just pretend to be realtimemap.grt.ca, because IIRC it didn't have so much crap to wade through.
+
+Anyhoo, got the parser working. Man is it wordy.
+Wow, I don't have any idea of how to use this data. I need to read the GTFS and GTFS-realtime specs more closely.

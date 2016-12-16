@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<!-- Crafted by hand in Canada -->
+<head>
+<title> GRT GTFS </title>
+<script src="deps/long.min.js"></script>
+<script src="deps/bytebuffer.min.js"></script>
+<script src="deps/protobuf-light.min.js"></script>
+</head>
+<body>
+<script>
+/* CORS isn't on these yet.*/
+const VEHICLE_POSITIONS_FEED = "http://192.237.29.212:8080/gtfsrealtime/VehiclePositions";
+const TRIP_UPDATES_FEED = "http://192.237.29.212:8080/gtfsrealtime/TripUpdates";
+/**//*
+const VEHICLE_POSITIONS_FEED = "test_feed/VehiclePositions";
+const TRIP_UPDATES_FEED = "test_feed/TripUpdates";
+*/
+dcodeIO.ProtoBuf.loadJsonFile("gtfs-realtime.proto.json", (err, builder) => {
+  var Transit = builder.build("transit_realtime");
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", VEHICLE_POSITIONS_FEED, true);
+  xhr.responseType = "arraybuffer";
+
+  xhr.onload = () => {
+    let buf = xhr.response;
+    if (buf) {
+      let msg = Transit.FeedMessage.decode(buf);
+      console.log(msg);
+    } else {
+      console.warn("Nope, no response");
+    }
+  };
+  xhr.onerror = (e) => {
+    console.error("XHR error: " + e);
+  };
+
+  xhr.send();
+});
+</script>
+</body>
+</html>
